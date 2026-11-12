@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ResumeApp from './components/ResumeApp.vue';
 import ProjectLanding from './Projects/ProjectLanding.vue';
+import AdminDashboard from './components/AdminDashboard.vue';
 
 const routes = [
   {
     path: '/',
     name: 'resume',
     component: ResumeApp,
+  },
+  {
+    path: '/admin',
+    name: 'admin-dashboard',
+    component: AdminDashboard,
   },
   {
     path: '/projects/:slug',

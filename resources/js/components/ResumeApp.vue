@@ -711,6 +711,10 @@
           <span>• رزومه و پورتفولیو ایلیا پورزنجانی</span>
         </div>
         <div class="flex items-center gap-4 font-semibold">
+          <router-link to="/admin" class="hover:text-orange-400 text-slate-500 hover:text-slate-300 transition flex items-center gap-1.5 text-[11px]" title="ورود به پیشخوان مدیریت پروژه‌ها">
+            <span>🔐</span>
+            <span>ورود مدیر</span>
+          </router-link>
           <a href="#home" class="hover:text-white transition hover:scale-105">بازگشت به بالا ↑</a>
           <span>طراحی شده با Vue 3 + Tailwind CSS + Laravel</span>
         </div>
@@ -1006,8 +1010,8 @@ const projectCategories = [
   { id: 'js', name: 'پروژه‌های جاوااسکریپت' },
 ];
 
-// 6 Mini Projects with mockUrls for Browser Frame
-const miniProjects = [
+// 6 Mini Projects with mockUrls for Browser Frame (seeded fallback)
+const miniProjects = ref([
   {
     id: 1,
     icon: '🛍️',
@@ -1128,14 +1132,31 @@ const miniProjects = [
     hostedUrl: 'https://example.com/iliya/memory-game',
     githubUrl: 'https://github.com/example/memory-game',
   },
-];
+]);
 
 const filteredMiniProjects = computed(() => {
   if (selectedCategory.value === 'all') {
-    return miniProjects;
+    return miniProjects.value;
   }
-  return miniProjects.filter(p => p.category === selectedCategory.value);
+  return miniProjects.value.filter(p => p.category === selectedCategory.value);
 });
+
+const fetchProjects = async () => {
+  try {
+    const res = await fetch('/api/projects', {
+      headers: { 'Accept': 'application/json' },
+    });
+    if (res.ok) {
+      const json = await res.json();
+      const list = json.data || json;
+      if (Array.isArray(list) && list.length > 0) {
+        miniProjects.value = list;
+      }
+    }
+  } catch (err) {
+    console.error('Failed to fetch dynamic projects, using defaults:', err);
+  }
+};
 
 const openProjectModal = (proj) => {
   activeModalProject.value = proj;
@@ -1167,6 +1188,7 @@ onMounted(() => {
   document.documentElement.classList.add('dark');
   window.addEventListener('scroll', handleScroll, { passive: true });
   tickTypewriter();
+  fetchProjects();
 });
 
 onUnmounted(() => {

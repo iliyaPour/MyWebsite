@@ -279,17 +279,10 @@
               <div class="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-4">
                 <a 
                   href="#contact" 
-                  class="px-7 py-3.5 rounded-2xl text-white font-bold text-xs sm:text-sm shadow-md bg-gradient-to-r from-amber-500 to-orange-500 shadow-orange-500/25 hover:scale-105 active:scale-95 transition-all duration-300"
+                  class="px-8 py-3.5 rounded-2xl text-white font-bold text-xs sm:text-sm shadow-md bg-gradient-to-r from-amber-500 to-orange-500 shadow-orange-500/25 hover:scale-105 active:scale-95 transition-all duration-300"
                 >
                   ارتباط با من
                 </a>
-                <button 
-                  @click="printResume" 
-                  class="px-7 py-3.5 rounded-2xl border border-slate-700 hover:border-slate-500 hover:bg-slate-800 text-slate-200 font-bold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 hover:scale-105 active:scale-95"
-                >
-                  <span>🖨️</span>
-                  <span>چاپ / خروجی PDF رزومه</span>
-                </button>
               </div>
 
             </div>
@@ -1146,10 +1139,6 @@ const filteredMiniProjects = computed(() => {
 
 const openProjectModal = (proj) => {
   activeModalProject.value = proj;
-};
-
-const printResume = () => {
-  window.print();
 };
 
 const handleScroll = () => {

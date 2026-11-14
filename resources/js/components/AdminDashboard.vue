@@ -142,6 +142,15 @@
               </router-link>
 
               <button
+                @click="openPasswordModal"
+                class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-800 text-orange-400 hover:bg-orange-500/10 hover:border-orange-500/30 transition-all flex items-center gap-1.5 cursor-pointer"
+                title="تغییر رمز عبور پیشخوان"
+              >
+                <span>🔑</span>
+                <span class="hidden sm:inline">تغییر رمز</span>
+              </button>
+
+              <button
                 @click="openCreateModal"
                 class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-950 bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-300 hover:to-amber-400 transition-all shadow-md shadow-orange-500/20 flex items-center gap-1.5 cursor-pointer"
               >
@@ -580,6 +589,80 @@
           </div>
         </transition>
 
+        <!-- ============================================== -->
+        <!-- MODAL: CHANGE ADMIN PASSWORD -->
+        <!-- ============================================== -->
+        <transition
+          enter-active-class="transition duration-200 ease-out"
+          enter-from-class="opacity-0 scale-95"
+          enter-to-class="opacity-100 scale-100"
+          leave-active-class="transition duration-150 ease-in"
+          leave-from-class="opacity-100 scale-100"
+          leave-to-class="opacity-0 scale-95"
+        >
+          <div v-if="passwordModal.show" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-md shadow-2xl relative">
+              <div class="flex items-center justify-between mb-5">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">🔑</span>
+                  <h3 class="text-base font-bold text-white">تغییر رمز عبور پیشخوان</h3>
+                </div>
+                <button @click="passwordModal.show = false" class="text-slate-400 hover:text-white p-1 cursor-pointer">✕</button>
+              </div>
+
+              <form @submit.prevent="handleChangePassword" class="space-y-4 text-xs">
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1.5">رمز عبور فعلی</label>
+                  <input
+                    v-model="passwordModal.currentPassword"
+                    type="password"
+                    required
+                    placeholder="رمز فعلی (مثلاً iliya1234)"
+                    class="w-full bg-slate-950 border border-slate-800 focus:border-orange-500 rounded-xl px-3.5 py-2.5 text-white outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1.5">رمز عبور جدید (حداقل ۶ کاراکتر)</label>
+                  <input
+                    v-model="passwordModal.newPassword"
+                    type="password"
+                    required
+                    minlength="6"
+                    placeholder="رمز عبور جدید خود را وارد کنید..."
+                    class="w-full bg-slate-950 border border-slate-800 focus:border-orange-500 rounded-xl px-3.5 py-2.5 text-white outline-none"
+                  />
+                </div>
+
+                <div v-if="passwordModal.error" class="p-3 bg-red-950/60 border border-red-800/60 rounded-xl text-red-300 text-xs">
+                  {{ passwordModal.error }}
+                </div>
+
+                <div class="pt-3 flex items-center justify-end gap-3">
+                  <button
+                    type="button"
+                    @click="passwordModal.show = false"
+                    class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer"
+                  >
+                    انصراف
+                  </button>
+                  <button
+                    type="submit"
+                    :disabled="passwordModal.isSubmitting"
+                    class="px-5 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-300 hover:to-amber-400 transition-all shadow-md shadow-orange-500/20 disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <svg v-if="passwordModal.isSubmitting" class="animate-spin h-3.5 w-3.5 text-slate-950" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                    <span>{{ passwordModal.isSubmitting ? 'در حال ثبت...' : 'ذخیره رمز جدید' }}</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </transition>
+
       </div>
     </div>
   </div>
@@ -653,6 +736,59 @@ const deleteModal = ref({
   project: null,
   isDeleting: false,
 });
+
+// Password Modal State
+const passwordModal = ref({
+  show: false,
+  currentPassword: '',
+  newPassword: '',
+  isSubmitting: false,
+  error: '',
+});
+
+const openPasswordModal = () => {
+  passwordModal.value = {
+    show: true,
+    currentPassword: '',
+    newPassword: '',
+    isSubmitting: false,
+    error: '',
+  };
+};
+
+const handleChangePassword = async () => {
+  passwordModal.value.error = '';
+  passwordModal.value.isSubmitting = true;
+
+  try {
+    const res = await fetch('/api/admin/change-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': getCsrfToken(),
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        current_password: passwordModal.value.currentPassword,
+        new_password: passwordModal.value.newPassword,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      showToast('رمز عبور شما با موفقیت تغییر کرد! 🎉');
+      passwordModal.value.show = false;
+    } else {
+      passwordModal.value.error = data.errors?.current_password?.[0] || data.errors?.new_password?.[0] || data.message || 'خطا در تغییر رمز عبور.';
+    }
+  } catch (err) {
+    passwordModal.value.error = 'خطا در ارتباط با سرور.';
+  } finally {
+    passwordModal.value.isSubmitting = false;
+  }
+};
 
 // Filtered Projects
 const filteredProjects = computed(() => {

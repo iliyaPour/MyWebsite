@@ -73,6 +73,34 @@ class AdminAuthController extends Controller
     }
 
     /**
+     * Update admin password.
+     */
+    public function updatePassword(Request $request): JsonResponse
+    {
+        $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:6',
+        ]);
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        if (! Hash::check($request->input('current_password'), $user->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => ['رمز عبور فعلی صحیح نمی‌باشد.'],
+            ]);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->input('new_password')),
+        ]);
+
+        return response()->json([
+            'message' => 'رمز عبور با موفقیت تغییر یافت.',
+        ]);
+    }
+
+    /**
      * Log out admin user.
      */
     public function logout(Request $request): JsonResponse

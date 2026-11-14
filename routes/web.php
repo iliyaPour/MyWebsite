@@ -12,6 +12,7 @@ Route::get('/api/admin/check', [AdminAuthController::class, 'check']);
 // Protected Admin API endpoints
 Route::middleware('auth')->group(function () {
     Route::post('/api/admin/logout', [AdminAuthController::class, 'logout']);
+    Route::post('/api/admin/change-password', [AdminAuthController::class, 'updatePassword']);
     Route::post('/api/admin/projects', [ProjectController::class, 'store']);
     Route::put('/api/admin/projects/{project}', [ProjectController::class, 'update']);
     Route::delete('/api/admin/projects/{project}', [ProjectController::class, 'destroy']);

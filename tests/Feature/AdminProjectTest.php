@@ -131,4 +131,37 @@ class AdminProjectTest extends TestCase
             'id' => $project->id,
         ]);
     }
+
+    public function test_admin_can_change_password(): void
+    {
+        $admin = User::factory()->create([
+            'password' => Hash::make('old-password-123'),
+        ]);
+
+        $response = $this->actingAs($admin)->postJson('/api/admin/change-password', [
+            'current_password' => 'old-password-123',
+            'new_password' => 'new-secret-password-456',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJson(['message' => 'رمز عبور با موفقیت تغییر یافت.']);
+
+        $admin->refresh();
+        $this->assertTrue(Hash::check('new-secret-password-456', $admin->password));
+    }
+
+    public function test_admin_cannot_change_password_with_invalid_current(): void
+    {
+        $admin = User::factory()->create([
+            'password' => Hash::make('old-password-123'),
+        ]);
+
+        $response = $this->actingAs($admin)->postJson('/api/admin/change-password', [
+            'current_password' => 'wrong-current-password',
+            'new_password' => 'new-secret-password-456',
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['current_password']);
+    }
 }

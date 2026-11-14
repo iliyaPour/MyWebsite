@@ -19,38 +19,41 @@
         'fixed top-0 left-0 right-0 z-40 backdrop-blur-xl border-b transition-all duration-300 no-print'
       ]"
     >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between relative">
         
         <!-- Social Icons (Left) -->
         <div class="flex items-center gap-2 sm:gap-3">
+          <!-- [LINK / MODIFICATION]: Official GitHub Profile Link -->
           <a 
-            href="https://github.com" 
+            href="https://github.com/iliyaPour" 
             target="_blank" 
-            class="w-10 h-10 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-slate-800 hover:border-orange-500 hover:text-orange-400 hover:scale-110 text-slate-300 flex items-center justify-center transition-all duration-300 shadow-sm text-sm"
-            title="GitHub"
+            rel="noopener noreferrer"
+            class="w-10 h-10 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-slate-800 hover:border-orange-500 hover:text-orange-400 hover:scale-110 text-slate-300 flex items-center justify-center transition-all duration-300 shadow-sm"
+            title="GitHub: iliyaPour"
           >
-            <span>🐙</span>
+            <!-- Official GitHub SVG Logo -->
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+            </svg>
           </a>
+
+          <!-- [LINK / MODIFICATION]: Official Telegram Profile Link -->
           <a 
-            href="https://linkedin.com" 
+            href="https://t.me/TheOgDAWG" 
             target="_blank" 
-            class="w-10 h-10 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-slate-800 hover:border-orange-500 hover:text-orange-400 hover:scale-110 text-slate-300 flex items-center justify-center transition-all duration-300 shadow-sm text-sm"
-            title="LinkedIn"
+            rel="noopener noreferrer"
+            class="w-10 h-10 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-slate-800 hover:border-orange-500 hover:text-orange-400 hover:scale-110 text-slate-300 flex items-center justify-center transition-all duration-300 shadow-sm"
+            title="Telegram: @TheOgDAWG"
           >
-            <span>💼</span>
-          </a>
-          <a 
-            href="https://t.me/iliya_front" 
-            target="_blank" 
-            class="w-10 h-10 rounded-2xl bg-slate-900/80 backdrop-blur-md border border-slate-800 hover:border-orange-500 hover:text-orange-400 hover:scale-110 text-slate-300 flex items-center justify-center transition-all duration-300 shadow-sm text-sm"
-            title="Telegram"
-          >
-            <span>✈️</span>
+            <!-- Official Telegram SVG Logo -->
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+            </svg>
           </a>
         </div>
 
-        <!-- Desktop Navigation Menu (Center) -->
-        <nav class="hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-slate-900/80 backdrop-blur-xl border border-slate-800 shadow-sm text-xs font-bold text-slate-300">
+        <!-- [NAVBAR NAVIGATION]: Centered mathematically at exact 50% screen width -->
+        <nav class="hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-slate-900/80 backdrop-blur-xl border border-slate-800 shadow-sm text-xs font-bold text-slate-300 absolute left-1/2 -translate-x-1/2">
           <a 
             v-for="item in navLinks" 
             :key="item.href"
@@ -66,15 +69,11 @@
           </a>
         </nav>
 
-        <!-- Brand / Logo (iliya) (Right) -->
+        <!-- [NAVBAR BRAND]: Clean brand name iliya (No icon, no dot) -->
         <div class="flex items-center gap-3">
-          <a href="#home" class="group flex items-center gap-2">
-            <span class="text-3xl font-black tracking-tighter bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+          <a href="#home" class="group flex items-center" title="ایلیا پورزنجانی">
+            <span class="text-2xl sm:text-3xl font-black tracking-tighter bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
               iliya
-            </span>
-            <span class="relative flex h-3 w-3">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
             </span>
           </a>
 
@@ -603,22 +602,37 @@
             </div>
           </div>
 
-          <!-- Telegram Card (Large & Clickable) -->
+          <!-- [LINK / CONTACT]: Official Telegram Profile (@TheOgDAWG) -->
           <a 
-            href="https://t.me/iliya_front" 
+            href="https://t.me/TheOgDAWG" 
             target="_blank" 
+            rel="noopener noreferrer"
             @mousemove="handleCardSpotlight"
             class="card-spotlight group p-8 rounded-3xl bg-slate-900/90 backdrop-blur-2xl border border-slate-800 hover:border-orange-500/60 shadow-xl hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-300 hover:scale-[1.02] flex items-center gap-6"
           >
-            <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-3xl bg-orange-950/50 border border-orange-500/30 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-amber-500 group-hover:to-orange-500 group-hover:border-transparent flex items-center justify-center text-4xl sm:text-5xl shrink-0 shadow-lg shadow-orange-500/10 transition-all duration-300">
-              ✈️
+            <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-3xl bg-orange-950/50 border border-orange-500/30 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-amber-500 group-hover:to-orange-500 group-hover:border-transparent flex items-center justify-center shrink-0 shadow-lg shadow-orange-500/10 transition-all duration-300 text-orange-400 group-hover:text-white">
+              <!-- Official Telegram SVG Icon -->
+              <svg class="w-9 h-9 sm:w-10 sm:h-10 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+              </svg>
             </div>
             <div class="flex-1 min-w-0">
-              <span class="text-xs uppercase font-extrabold tracking-wider text-slate-500 block mb-1">
-                پیام‌رسان تلگرام
-              </span>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-slate-500">
+                  پیام‌رسان تلگرام
+                </span>
+                <button
+                  type="button"
+                  @click.prevent.stop="copyToClipboard('@TheOgDAWG', 'آیدی تلگرام با موفقیت کپی شد! 📋')"
+                  class="px-2.5 py-0.5 rounded-lg bg-slate-800 hover:bg-orange-500 hover:text-white text-slate-300 text-[11px] font-bold transition flex items-center gap-1 cursor-pointer"
+                  title="کپی آیدی تلگرام"
+                >
+                  <span>📋</span>
+                  <span>کپی</span>
+                </button>
+              </div>
               <strong class="text-xl sm:text-2xl text-white group-hover:text-orange-400 font-black block mb-1 truncate transition-colors">
-                @iliya_front
+                @TheOgDAWG
               </strong>
               <span class="text-xs sm:text-sm text-orange-400/90 flex items-center gap-1 font-bold">
                 <span>ارسال مستقیم پیام در تلگرام</span>
@@ -627,21 +641,35 @@
             </div>
           </a>
 
-          <!-- Email Card (Large & Clickable) -->
+          <!-- [LINK / CONTACT]: Direct Email Address (iliya.pourzanjani6@gmail.com) -->
           <a 
-            href="mailto:iliya.pourzanjani@example.com" 
+            href="mailto:iliya.pourzanjani6@gmail.com" 
             @mousemove="handleCardSpotlight"
             class="card-spotlight group p-8 rounded-3xl bg-slate-900/90 backdrop-blur-2xl border border-slate-800 hover:border-orange-500/60 shadow-xl hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-300 hover:scale-[1.02] flex items-center gap-6"
           >
-            <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-3xl bg-orange-950/50 border border-orange-500/30 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-amber-500 group-hover:to-orange-500 group-hover:border-transparent flex items-center justify-center text-4xl sm:text-5xl shrink-0 shadow-lg shadow-orange-500/10 transition-all duration-300">
-              ✉️
+            <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-3xl bg-orange-950/50 border border-orange-500/30 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-amber-500 group-hover:to-orange-500 group-hover:border-transparent flex items-center justify-center shrink-0 shadow-lg shadow-orange-500/10 transition-all duration-300 text-orange-400 group-hover:text-white">
+              <!-- Clean SVG Mail Icon -->
+              <svg class="w-9 h-9 sm:w-10 sm:h-10 fill-none stroke-current" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
             </div>
             <div class="flex-1 min-w-0">
-              <span class="text-xs uppercase font-extrabold tracking-wider text-slate-500 block mb-1">
-                آدرس ایمیل مستقیم
-              </span>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs uppercase font-extrabold tracking-wider text-slate-500">
+                  آدرس ایمیل مستقیم
+                </span>
+                <button
+                  type="button"
+                  @click.prevent.stop="copyToClipboard('iliya.pourzanjani6@gmail.com', 'آدرس ایمیل با موفقیت کپی شد! 📋')"
+                  class="px-2.5 py-0.5 rounded-lg bg-slate-800 hover:bg-orange-500 hover:text-white text-slate-300 text-[11px] font-bold transition flex items-center gap-1 cursor-pointer"
+                  title="کپی آدرس ایمیل"
+                >
+                  <span>📋</span>
+                  <span>کپی</span>
+                </button>
+              </div>
               <strong class="text-base sm:text-lg text-white group-hover:text-orange-400 font-black font-mono block mb-1 truncate transition-colors">
-                iliya.pourzanjani@example.com
+                iliya.pourzanjani6@gmail.com
               </strong>
               <span class="text-xs sm:text-sm text-orange-400/90 flex items-center gap-1 font-bold">
                 <span>ارسال ایمیل مستقیم</span>
@@ -650,58 +678,79 @@
             </div>
           </a>
 
-          <!-- Professional Profiles (GitHub & LinkedIn) -->
-          <div 
+          <!-- [LINK / CONTACT]: Dedicated GitHub Profile Card (iliyaPour) -->
+          <a 
+            href="https://github.com/iliyaPour" 
+            target="_blank" 
+            rel="noopener noreferrer"
             @mousemove="handleCardSpotlight"
-            class="card-spotlight p-8 rounded-3xl bg-slate-900/90 backdrop-blur-2xl border border-slate-800 hover:border-slate-700 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] flex items-center gap-6"
+            class="card-spotlight group p-8 rounded-3xl bg-slate-900/90 backdrop-blur-2xl border border-slate-800 hover:border-orange-500/60 shadow-xl hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-300 hover:scale-[1.02] flex items-center gap-6"
           >
-            <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-3xl bg-orange-950/50 border border-orange-500/30 flex items-center justify-center text-4xl sm:text-5xl shrink-0 shadow-lg shadow-orange-500/10">
-              💼
+            <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-3xl bg-orange-950/50 border border-orange-500/30 group-hover:scale-110 group-hover:bg-gradient-to-tr group-hover:from-amber-500 group-hover:to-orange-500 group-hover:border-transparent flex items-center justify-center shrink-0 shadow-lg shadow-orange-500/10 transition-all duration-300 text-orange-400 group-hover:text-white">
+              <!-- Official GitHub SVG Icon -->
+              <svg class="w-9 h-9 sm:w-10 sm:h-10 fill-current" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
             </div>
             <div class="flex-1 min-w-0">
               <span class="text-xs uppercase font-extrabold tracking-wider text-slate-500 block mb-1">
-                پروفایل‌های تخصصی
+                ریپازیتوری‌های تخصصی
               </span>
-              <strong class="text-xl sm:text-2xl text-white font-black block mb-2">
-                شبکه‌های حرفه‌ای
+              <strong class="text-xl sm:text-2xl text-white group-hover:text-orange-400 font-black block mb-1 truncate transition-colors">
+                github.com/iliyaPour
               </strong>
-              <div class="flex items-center gap-3">
-                <a 
-                  href="https://github.com" 
-                  target="_blank" 
-                  class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-orange-500 hover:text-white text-slate-300 text-xs font-bold transition flex items-center gap-1.5"
-                >
-                  <span>🐙</span>
-                  <span>گیت‌هاب</span>
-                </a>
-                <a 
-                  href="https://linkedin.com" 
-                  target="_blank" 
-                  class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-orange-500 hover:text-white text-slate-300 text-xs font-bold transition flex items-center gap-1.5"
-                >
-                  <span>💼</span>
-                  <span>لینکدین</span>
-                </a>
-              </div>
+              <span class="text-xs sm:text-sm text-orange-400/90 flex items-center gap-1 font-bold">
+                <span>مشاهده سورس‌کدها و پروژه‌ها</span>
+                <span class="group-hover:translate-x-1 transition-transform">↗</span>
+              </span>
             </div>
-          </div>
-
-        </div>
-
-        <!-- Big Center CTA Button -->
-        <div class="mt-12 text-center">
-          <a 
-            href="https://t.me/iliya_front" 
-            target="_blank" 
-            class="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 hover:from-amber-400 hover:to-orange-400 text-white font-black text-base sm:text-lg shadow-xl shadow-orange-500/30 hover:scale-105 active:scale-95 transition-all duration-300"
-          >
-            <span>شروع گفتگو در تلگرام</span>
-            <span class="text-xl">🚀</span>
           </a>
+
         </div>
+
+        <!-- [CTA BUTTON REMOVED AS REQUESTED] -->
 
       </div>
     </section>
+
+    <!-- Toast Notification for Copy to Clipboard -->
+    <transition
+      enter-active-class="transform ease-out duration-300 transition"
+      enter-from-class="translate-y-4 opacity-0"
+      enter-to-class="translate-y-0 opacity-100"
+      leave-active-class="transition ease-in duration-200"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div
+        v-if="copyToast.show"
+        class="fixed bottom-6 left-6 z-50 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-slate-900/95 border border-orange-500/60 shadow-2xl shadow-orange-500/20 backdrop-blur-xl text-orange-200 text-xs font-bold"
+      >
+        <span class="text-base">📋</span>
+        <span>{{ copyToast.message }}</span>
+      </div>
+    </transition>
+
+    <!-- Floating Back to Top Button -->
+    <transition
+      enter-active-class="transition ease-out duration-300"
+      enter-from-class="opacity-0 translate-y-4"
+      enter-to-class="opacity-100 translate-y-0"
+      leave-active-class="transition ease-in duration-200"
+      leave-from-class="opacity-100 translate-y-0"
+      leave-to-class="opacity-0 translate-y-4"
+    >
+      <button
+        v-if="isScrolled"
+        @click="scrollToTop"
+        class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-orange-500 text-orange-400 hover:text-white shadow-xl shadow-black/50 hover:shadow-orange-500/20 backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer no-print"
+        title="بازگشت به ابتدای صفحه"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
+    </transition>
 
     <!-- FOOTER -->
     <footer class="no-print py-12 border-t border-slate-800 text-center text-xs text-slate-400">
@@ -1160,6 +1209,37 @@ const fetchProjects = async () => {
 
 const openProjectModal = (proj) => {
   activeModalProject.value = proj;
+};
+
+// Copy to Clipboard Feedback
+const copyToast = ref({
+  show: false,
+  message: '',
+});
+
+const copyToClipboard = (text, message) => {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text);
+  } else {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+  }
+  copyToast.value = { show: true, message };
+  setTimeout(() => {
+    copyToast.value.show = false;
+  }, 2500);
+};
+
+// Smooth Scroll to Top
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 };
 
 const handleScroll = () => {

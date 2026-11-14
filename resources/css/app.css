@@ -1,15 +1,16 @@
-/* Local Font Definition: Vazir (100% Offline & Fast) */
 @font-face {
     font-family: 'Vazirmatn';
-    src: url('/fonts/Vazir-Regular.ttf') format('truetype');
+    src: url('../fonts/vazirmatn.woff2') format('woff2-variations'),
+         url('../fonts/vazirmatn.woff2') format('woff2');
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Vazir';
-    src: url('/fonts/Vazir-Regular.ttf') format('truetype');
+    font-family: 'Vazirmatn Fanum';
+    src: url('../fonts/vazirmatn-fanum.woff2') format('woff2-variations'),
+         url('../fonts/vazirmatn-fanum.woff2') format('woff2');
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
@@ -23,7 +24,7 @@
 @source '../js/**/*.{vue,js,ts}';
 
 @theme {
-    --font-sans: 'Vazirmatn', 'Vazir', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-sans: 'Vazirmatn', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 html {

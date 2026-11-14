@@ -32,6 +32,11 @@
         <!-- Favicon -->
         <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23080B11'/><text x='50%' y='68%' font-size='60' text-anchor='middle' fill='%23f97316' font-family='sans-serif' font-weight='900'>i</text></svg>">
 
+        <!-- Google Fonts Preconnect (Plus Jakarta Sans & Vazirmatn) -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
         <!-- Scripts and Stylesheets -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>

@@ -24,6 +24,7 @@ class ProjectFactory extends Factory
             'category' => fake()->randomElement(['webapps', 'mini', 'js']),
             'category_label' => 'پروژه فرانت‌اند',
             'icon' => '💻',
+            'image' => null,
             'mock_url' => 'https://iliya.dev/projects/'.fake()->slug(),
             'short_desc' => fake()->paragraph(1),
             'full_desc' => fake()->paragraph(3),

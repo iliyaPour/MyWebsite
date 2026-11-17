@@ -21,6 +21,7 @@ class Project extends Model
         'category',
         'category_label',
         'icon',
+        'image',
         'mock_url',
         'short_desc',
         'full_desc',

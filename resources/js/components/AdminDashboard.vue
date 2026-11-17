@@ -263,12 +263,20 @@
               <div class="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-orange-500/40 via-amber-500/20 to-transparent"></div>
 
               <div>
-                <!-- Header: Icon & Category & Action menu -->
+                <!-- Header: Image/Thumbnail & Category & Action menu -->
                 <div class="flex items-center justify-between gap-3 mb-4">
                   <div class="flex items-center gap-3">
-                    <span class="text-3xl p-2.5 bg-slate-950 rounded-2xl border border-slate-800/80 shadow-inner">
-                      {{ project.icon || '🚀' }}
-                    </span>
+                    <div class="w-12 h-12 rounded-2xl bg-slate-950 border border-slate-800/80 overflow-hidden flex items-center justify-center shrink-0 shadow-inner">
+                      <img
+                        v-if="project.image"
+                        :src="project.image"
+                        :alt="project.title"
+                        class="w-full h-full object-cover"
+                      />
+                      <svg v-else class="w-6 h-6 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
                     <div>
                       <span class="text-[11px] font-semibold text-orange-400 px-2 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/20">
                         {{ project.categoryLabel || project.category }}
@@ -376,44 +384,91 @@
 
               <!-- Modal Form Body -->
               <form @submit.prevent="saveProject" class="p-6 overflow-y-auto space-y-5 text-xs">
-                <!-- Title & Icon -->
-                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                  <div class="sm:col-span-3">
-                    <label class="block font-semibold text-slate-300 mb-1.5">عنوان پروژه <span class="text-orange-500">*</span></label>
-                    <input
-                      v-model="form.title"
-                      type="text"
-                      placeholder="مثال: فروشگاه اینترنتی مدرن"
-                      required
-                      class="w-full bg-slate-950 border border-slate-800 focus:border-orange-500 rounded-xl px-3.5 py-2.5 text-white outline-none"
-                    />
+                <!-- Title -->
+                <div>
+                  <label class="block font-semibold text-slate-300 mb-1.5">عنوان پروژه <span class="text-orange-500">*</span></label>
+                  <input
+                    v-model="form.title"
+                    type="text"
+                    placeholder="مثال: فروشگاه اینترنتی مدرن"
+                    required
+                    class="w-full bg-slate-950 border border-slate-800 focus:border-orange-500 rounded-xl px-3.5 py-2.5 text-white outline-none"
+                  />
+                </div>
+
+                <!-- Project Screenshot / Image Upload & URL -->
+                <div class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <label class="block font-semibold text-slate-200">
+                      تصویر / اسکرین‌شات سایت پروژه
+                    </label>
+                    <span v-if="form.isUploadingImage" class="text-orange-400 text-[11px] flex items-center gap-1.5">
+                      <svg class="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                      </svg>
+                      در حال آپلود عکس...
+                    </span>
                   </div>
-                  <div>
-                    <label class="block font-semibold text-slate-300 mb-1.5">آیکون اموجی</label>
+
+                  <!-- Image Preview Box (If image chosen) -->
+                  <div v-if="form.imagePreview || form.image" class="relative rounded-xl overflow-hidden border border-slate-700 bg-slate-900 max-h-48 group">
+                    <img
+                      :src="form.imagePreview || form.image"
+                      alt="پیش‌نمایش تصویر پروژه"
+                      class="w-full h-44 object-cover object-top"
+                    />
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                      <button
+                        type="button"
+                        @click="triggerFileInput"
+                        class="px-3.5 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-400 text-slate-950 font-bold text-xs transition cursor-pointer"
+                      >
+                        تغییر عکس
+                      </button>
+                      <button
+                        type="button"
+                        @click="removeImage"
+                        class="px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition cursor-pointer"
+                      >
+                        حذف عکس
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Upload Area (when no image) -->
+                  <div
+                    v-else
+                    @click="triggerFileInput"
+                    class="border-2 border-dashed border-slate-800 hover:border-orange-500/60 rounded-xl p-5 text-center cursor-pointer transition-colors bg-slate-900/40 hover:bg-slate-900/80"
+                  >
+                    <div class="text-2xl mb-1.5 text-slate-500">📷</div>
+                    <p class="text-slate-300 font-semibold text-xs">برای آپلود اسکرین‌شات سایت کلیک کنید</p>
+                    <p class="text-slate-500 text-[10px] mt-1">فرمت‌های مجاز: JPG, PNG, WEBP تا سقف ۵ مگابایت</p>
+                  </div>
+
+                  <!-- Hidden File Input -->
+                  <input
+                    ref="fileInputRef"
+                    type="file"
+                    accept="image/*"
+                    @change="handleImageUpload"
+                    class="hidden"
+                  />
+
+                  <!-- Optional Direct Image URL -->
+                  <div class="pt-1">
                     <div class="flex items-center gap-2">
+                      <span class="text-[11px] text-slate-400 shrink-0">یا آدرس مستقیم عکس:</span>
                       <input
-                        v-model="form.icon"
+                        v-model="form.image"
+                        @input="form.imagePreview = form.image"
                         type="text"
-                        maxlength="4"
-                        placeholder="🛍️"
-                        class="w-full text-center text-lg bg-slate-950 border border-slate-800 focus:border-orange-500 rounded-xl py-2 text-white outline-none"
+                        placeholder="https://... یا /images/..."
+                        class="w-full bg-slate-900 border border-slate-800 focus:border-orange-500 rounded-lg px-2.5 py-1.5 text-white text-[11px] outline-none dir-ltr"
                       />
                     </div>
                   </div>
-                </div>
-
-                <!-- Quick Emoji Suggestions -->
-                <div class="flex items-center gap-2 flex-wrap text-sm">
-                  <span class="text-[11px] text-slate-500">انتخاب سریع آیکون:</span>
-                  <button
-                    v-for="e in ['🚀', '💻', '🛍️', '🎨', '🌤️', '📋', '🎵', '🔢', '🧠', '⚙️', '📱', '📊']"
-                    :key="e"
-                    type="button"
-                    @click="form.icon = e"
-                    class="p-1.5 rounded-lg bg-slate-950 hover:bg-orange-500/20 border border-slate-800 transition-colors cursor-pointer"
-                  >
-                    {{ e }}
-                  </button>
                 </div>
 
                 <!-- Category & Label -->
@@ -721,7 +776,9 @@ const form = ref({
   title: '',
   category: 'webapps',
   categoryLabel: 'اپلیکیشن وب',
-  icon: '🚀',
+  image: '',
+  imagePreview: '',
+  isUploadingImage: false,
   shortDesc: '',
   fullDesc: '',
   hostedUrl: '',
@@ -729,6 +786,8 @@ const form = ref({
   tagsInput: '',
   featuresInput: '',
 });
+
+const fileInputRef = ref(null);
 
 // Delete Modal State
 const deleteModal = ref({
@@ -917,6 +976,55 @@ const handleCategoryChange = () => {
   }
 };
 
+// Image upload handlers
+const triggerFileInput = () => {
+  fileInputRef.value?.click();
+};
+
+const handleImageUpload = async (event) => {
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  form.value.imagePreview = URL.createObjectURL(file);
+  form.value.isUploadingImage = true;
+  modalError.value = '';
+
+  const formData = new FormData();
+  formData.append('image', file);
+
+  try {
+    const res = await fetch('/api/admin/projects/upload-image', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': getCsrfToken(),
+      },
+      credentials: 'same-origin',
+      body: formData,
+    });
+
+    const data = await res.json();
+    if (res.ok && data.url) {
+      form.value.image = data.url;
+      showToast('عکس با موفقیت آپلود شد ✨');
+    } else {
+      modalError.value = data.message || 'خطا در آپلود عکس.';
+    }
+  } catch (err) {
+    modalError.value = 'خطا در ارتباط با سرور هنگام آپلود عکس.';
+  } finally {
+    form.value.isUploadingImage = false;
+  }
+};
+
+const removeImage = () => {
+  form.value.image = '';
+  form.value.imagePreview = '';
+  if (fileInputRef.value) {
+    fileInputRef.value.value = '';
+  }
+};
+
 // Open Create Modal
 const openCreateModal = () => {
   isEditing.value = false;
@@ -926,7 +1034,9 @@ const openCreateModal = () => {
     title: '',
     category: 'webapps',
     categoryLabel: 'اپلیکیشن وب',
-    icon: '🚀',
+    image: '',
+    imagePreview: '',
+    isUploadingImage: false,
     shortDesc: '',
     fullDesc: '',
     hostedUrl: '',
@@ -946,7 +1056,9 @@ const openEditModal = (project) => {
     title: project.title,
     category: project.category || 'webapps',
     categoryLabel: project.categoryLabel || 'اپلیکیشن وب',
-    icon: project.icon || '🚀',
+    image: project.image || '',
+    imagePreview: project.image || '',
+    isUploadingImage: false,
     shortDesc: project.shortDesc || '',
     fullDesc: project.fullDesc || '',
     hostedUrl: project.hostedUrl || '',
@@ -981,7 +1093,7 @@ const saveProject = async () => {
     title: form.value.title,
     category: form.value.category,
     category_label: form.value.categoryLabel,
-    icon: form.value.icon || '🚀',
+    image: form.value.image || null,
     short_desc: form.value.shortDesc,
     full_desc: form.value.fullDesc,
     hosted_url: form.value.hostedUrl || null,

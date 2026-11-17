@@ -25,6 +25,7 @@ class ProjectResource extends JsonResource
             'category_label' => $this->category_label,
             'categoryLabel' => $this->category_label,
             'icon' => $this->icon,
+            'image' => $this->image,
             'mock_url' => $this->mock_url,
             'mockUrl' => $this->mock_url,
             'short_desc' => $this->short_desc,

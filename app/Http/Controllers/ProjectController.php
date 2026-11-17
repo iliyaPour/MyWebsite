@@ -21,6 +21,33 @@ class ProjectController extends Controller
     }
 
     /**
+     * Upload a project screenshot/image.
+     */
+    public function uploadImage(Request $request): JsonResponse
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp,svg,gif|max:5120',
+        ]);
+
+        $file = $request->file('image');
+        $fileName = 'project_'.time().'_'.str()->random(8).'.'.$file->getClientOriginalExtension();
+        $targetDir = public_path('images/projects');
+
+        if (! file_exists($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+
+        $file->move($targetDir, $fileName);
+
+        $imageUrl = '/images/projects/'.$fileName;
+
+        return response()->json([
+            'message' => 'تصویر با موفقیت بارگذاری شد.',
+            'url' => $imageUrl,
+        ]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request): JsonResponse
@@ -30,6 +57,7 @@ class ProjectController extends Controller
             'category' => 'required|string|max:50',
             'category_label' => 'nullable|string|max:100',
             'icon' => 'nullable|string|max:50',
+            'image' => 'nullable',
             'mock_url' => 'nullable|string|max:255',
             'short_desc' => 'nullable|string',
             'full_desc' => 'nullable|string',
@@ -40,6 +68,17 @@ class ProjectController extends Controller
             'gradient' => 'nullable|string|max:255',
             'order' => 'nullable|integer',
         ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = 'project_'.time().'_'.str()->random(8).'.'.$file->getClientOriginalExtension();
+            $targetDir = public_path('images/projects');
+            if (! file_exists($targetDir)) {
+                mkdir($targetDir, 0755, true);
+            }
+            $file->move($targetDir, $fileName);
+            $validated['image'] = '/images/projects/'.$fileName;
+        }
 
         if (empty($validated['category_label'])) {
             $validated['category_label'] = match ($validated['category']) {
@@ -74,6 +113,7 @@ class ProjectController extends Controller
             'category' => 'sometimes|required|string|max:50',
             'category_label' => 'nullable|string|max:100',
             'icon' => 'nullable|string|max:50',
+            'image' => 'nullable',
             'mock_url' => 'nullable|string|max:255',
             'short_desc' => 'nullable|string',
             'full_desc' => 'nullable|string',
@@ -85,6 +125,26 @@ class ProjectController extends Controller
             'order' => 'nullable|integer',
         ]);
 
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = 'project_'.time().'_'.str()->random(8).'.'.$file->getClientOriginalExtension();
+            $targetDir = public_path('images/projects');
+            if (! file_exists($targetDir)) {
+                mkdir($targetDir, 0755, true);
+            }
+            $file->move($targetDir, $fileName);
+
+            // Delete old file if present
+            if ($project->image && str_starts_with($project->image, '/images/projects/')) {
+                $oldPath = public_path(ltrim($project->image, '/'));
+                if (file_exists($oldPath)) {
+                    @unlink($oldPath);
+                }
+            }
+
+            $validated['image'] = '/images/projects/'.$fileName;
+        }
+
         $project->update($validated);
 
         return new ProjectResource($project);
@@ -95,6 +155,13 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project): JsonResponse
     {
+        if ($project->image && str_starts_with($project->image, '/images/projects/')) {
+            $filePath = public_path(ltrim($project->image, '/'));
+            if (file_exists($filePath)) {
+                @unlink($filePath);
+            }
+        }
+
         $project->delete();
 
         return response()->json([

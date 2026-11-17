@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -163,5 +164,49 @@ class AdminProjectTest extends TestCase
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['current_password']);
+    }
+
+    public function test_admin_can_upload_project_image(): void
+    {
+        $admin = User::factory()->create();
+        $pngContent = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==');
+        $file = UploadedFile::fake()->createWithContent('screenshot.png', $pngContent, 'image/png');
+
+        $response = $this->actingAs($admin)->postJson('/api/admin/projects/upload-image', [
+            'image' => $file,
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure(['message', 'url']);
+
+        $url = $response->json('url');
+        $this->assertStringStartsWith('/images/projects/', $url);
+
+        // Clean up test generated file
+        $filePath = public_path(ltrim($url, '/'));
+        if (file_exists($filePath)) {
+            @unlink($filePath);
+        }
+    }
+
+    public function test_admin_can_create_project_with_image(): void
+    {
+        $admin = User::factory()->create();
+
+        $response = $this->actingAs($admin)->postJson('/api/admin/projects', [
+            'title' => 'پروژه همراه با عکس',
+            'category' => 'webapps',
+            'image' => '/images/projects/sample-preview.png',
+            'hosted_url' => 'https://example.com/site',
+        ]);
+
+        $response->assertStatus(201)
+            ->assertJsonPath('data.title', 'پروژه همراه با عکس')
+            ->assertJsonPath('data.image', '/images/projects/sample-preview.png');
+
+        $this->assertDatabaseHas('projects', [
+            'title' => 'پروژه همراه با عکس',
+            'image' => '/images/projects/sample-preview.png',
+        ]);
     }
 }

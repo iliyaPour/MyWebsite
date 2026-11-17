@@ -490,33 +490,34 @@
                 <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
               </div>
-              <span class="text-[10px] font-mono text-slate-500 truncate max-w-[170px] dir-ltr text-center">
-                {{ proj.mockUrl }}
-              </span>
               <span class="text-[11px] text-slate-600">⚡</span>
             </div>
 
-            <!-- Card Visual Banner -->
-            <div :class="['h-44 p-6 relative flex flex-col justify-between overflow-hidden', proj.gradient]">
-              <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
+            <!-- Card Visual Banner (Supports Project Image / Screenshot) -->
+            <div :class="['h-48 relative flex flex-col justify-between overflow-hidden', proj.gradient || 'bg-slate-950']">
+              <!-- Real Project Screenshot / Thumbnail if available -->
+              <img
+                v-if="proj.image"
+                :src="proj.image"
+                :alt="proj.title"
+                class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-black/30"></div>
               
-              <!-- Floating Icon and Category -->
-              <div class="relative z-10 flex items-center justify-between">
-                <span class="w-13 h-13 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-3xl shadow-sm text-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                  {{ proj.icon }}
-                </span>
-                <span class="px-3 py-1 rounded-full bg-black/45 backdrop-blur-md text-white text-[11px] font-bold">
+              <!-- Category Badge (Top) -->
+              <div class="relative z-10 p-5 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] font-bold border border-white/10 shadow-sm">
                   {{ proj.categoryLabel }}
                 </span>
               </div>
 
-              <!-- Live Indicator / Click hint -->
-              <div class="relative z-10 flex items-center justify-between text-white text-xs font-bold">
-                <span class="flex items-center gap-1.5 opacity-90">
-                  <span class="w-2.5 h-2.5 rounded-full bg-orange-400 animate-ping"></span>
-                  <span>آنلاین در هاست</span>
+              <!-- Live Indicator / Click hint (Bottom) -->
+              <div class="relative z-10 p-5 flex items-center justify-between text-white text-xs font-bold">
+                <span class="flex items-center gap-1.5 opacity-90 bg-black/50 px-2.5 py-1 rounded-lg backdrop-blur-sm">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span class="text-[11px]">آنلاین</span>
                 </span>
-                <span class="opacity-80 group-hover:opacity-100 group-hover:translate-x-1 transition-transform">
+                <span class="opacity-80 group-hover:opacity-100 group-hover:translate-x-1 transition-transform bg-orange-500/80 px-2.5 py-1 rounded-lg backdrop-blur-sm text-[11px]">
                   مشاهده مشخصات ←
                 </span>
               </div>
@@ -793,11 +794,6 @@
               <span class="w-3 h-3 rounded-full bg-amber-500"></span>
               <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
             </div>
-            
-            <div class="px-4 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] font-mono text-slate-400 flex items-center gap-2">
-              <span class="text-emerald-400">🔒</span>
-              <span class="dir-ltr">{{ activeModalProject.mockUrl }}</span>
-            </div>
 
             <button 
               @click="activeModalProject = null" 
@@ -808,19 +804,49 @@
           </div>
 
           <!-- Modal Banner -->
-          <div :class="['p-8 text-white relative overflow-hidden', activeModalProject.gradient]">
-            <div class="relative z-10 flex items-start justify-between">
-              <div class="flex items-center gap-4">
-                <span class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-4xl shadow-lg">
-                  {{ activeModalProject.icon }}
+          <div :class="['p-6 sm:p-8 text-white relative overflow-hidden', activeModalProject.gradient || 'bg-slate-900']">
+            <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span class="text-xs uppercase font-extrabold tracking-wider px-3.5 py-1 rounded-full bg-black/45 backdrop-blur-md text-white border border-white/10 shadow-sm">
+                  {{ activeModalProject.categoryLabel }}
                 </span>
-                <div>
-                  <span class="text-xs uppercase font-extrabold tracking-wider px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-white">
-                    {{ activeModalProject.categoryLabel }}
-                  </span>
-                  <h3 class="text-2xl sm:text-3xl font-black mt-2">{{ activeModalProject.title }}</h3>
-                </div>
+                <h3 class="text-2xl sm:text-3xl font-black mt-2.5">{{ activeModalProject.title }}</h3>
               </div>
+              <div v-if="activeModalProject.hostedUrl" class="shrink-0">
+                <a 
+                  :href="activeModalProject.hostedUrl" 
+                  target="_blank" 
+                  class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-orange-500/25 transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
+                >
+                  <span>مشاهده سایت زنده</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Website Screenshot Preview (Instead of Emoji) -->
+          <div v-if="activeModalProject.image" class="px-6 sm:px-8 pt-6">
+            <div class="rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl relative group/preview">
+              <div class="px-4 py-2 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+                <span class="text-[11px] font-bold text-slate-400 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span>تصویر و اسکرین‌شات وب‌سایت</span>
+                </span>
+                <a
+                  :href="activeModalProject.image"
+                  target="_blank"
+                  class="text-[11px] text-orange-400 hover:text-orange-300 transition flex items-center gap-1 font-semibold"
+                >
+                  <span>مشاهده تصویر کامل</span>
+                  <span>↗</span>
+                </a>
+              </div>
+              <img
+                :src="activeModalProject.image"
+                :alt="activeModalProject.title"
+                class="w-full max-h-[380px] object-cover object-top hover:scale-[1.01] transition-transform duration-300"
+              />
             </div>
           </div>
 

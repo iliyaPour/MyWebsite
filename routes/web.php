@@ -17,8 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/api/admin/change-password', [AdminAuthController::class, 'updatePassword']);
     Route::post('/api/admin/projects/upload-image', [ProjectController::class, 'uploadImage']);
     Route::post('/api/admin/projects', [ProjectController::class, 'store']);
-    Route::put('/api/admin/projects/{project}', [ProjectController::class, 'update']);
-    Route::delete('/api/admin/projects/{project}', [ProjectController::class, 'destroy']);
+    Route::match(['put', 'post'], '/api/admin/projects/{project}', [ProjectController::class, 'update']);
+    Route::match(['delete', 'post'], '/api/admin/projects/{project}', [ProjectController::class, 'destroy']);
 });
 
 // Temporary Migration & Database Setup Route for hosts without Terminal/SSH

@@ -21,7 +21,7 @@
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between relative">
         
-        <!-- Social Icons (Left) -->
+        <!-- Social Icons & Admin Login (Left) -->
         <div class="flex items-center gap-2 sm:gap-3">
           <!-- [LINK / MODIFICATION]: Official GitHub Profile Link -->
           <a 
@@ -50,6 +50,16 @@
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
             </svg>
           </a>
+
+          <!-- Admin Login Button (Navbar) -->
+          <router-link
+            to="/admin"
+            class="px-3.5 py-2 rounded-2xl bg-slate-900/90 hover:bg-orange-500/20 border border-slate-800 hover:border-orange-500/60 text-slate-300 hover:text-orange-400 flex items-center gap-1.5 transition-all duration-300 shadow-sm text-xs font-bold"
+            title="ورود به پنل مدیریت"
+          >
+            <span>ورود مدیر</span>
+            <span class="text-xs">🔐</span>
+          </router-link>
         </div>
 
         <!-- [NAVBAR NAVIGATION]: Centered mathematically at exact 50% screen width -->
@@ -108,6 +118,15 @@
           >
             {{ item.name[locale] }}
           </a>
+
+          <router-link 
+            to="/admin" 
+            @click="isMobileMenuOpen = false"
+            class="block py-2.5 px-4 rounded-xl text-sm font-bold text-orange-400 bg-orange-500/10 border border-orange-500/20 hover:bg-orange-500/20 transition flex items-center justify-between"
+          >
+            <span>ورود مدیر</span>
+            <span>🔐</span>
+          </router-link>
         </div>
       </transition>
     </header>
@@ -738,34 +757,29 @@
       enter-from-class="opacity-0 translate-y-4"
       enter-to-class="opacity-100 translate-y-0"
       leave-active-class="transition ease-in duration-200"
-      leave-from-class="opacity-100 translate-y-0"
-      leave-to-class="opacity-0 translate-y-4"
+      leave-from-class="opacity-100 translate-y-0 scale-100"
+      leave-to-class="opacity-0 translate-y-6 scale-75"
     >
       <button
         v-if="isScrolled"
         @click="scrollToTop"
-        class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-orange-500 text-orange-400 hover:text-white shadow-xl shadow-black/50 hover:shadow-orange-500/20 backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer no-print"
+        class="fixed bottom-12 right-6 sm:right-10 z-40 w-13 h-13 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-orange-500 hover:border-orange-400 text-orange-400 hover:text-white shadow-2xl shadow-orange-500/40 hover:shadow-orange-500/60 backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:scale-115 active:scale-95 cursor-pointer no-print ring-4 ring-orange-500/20"
         title="بازگشت به ابتدای صفحه"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
       </button>
     </transition>
 
     <!-- FOOTER -->
-    <footer class="no-print py-12 border-t border-slate-800 text-center text-xs text-slate-400">
+    <footer class="no-print py-10 border-t border-slate-800/80 text-center text-xs text-slate-400">
       <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-2 font-black">
           <span class="text-xl text-orange-400">iliya</span>
           <span>• رزومه و پورتفولیو ایلیا پورزنجانی</span>
         </div>
-        <div class="flex items-center gap-4 font-semibold">
-          <router-link to="/admin" class="hover:text-orange-400 text-slate-500 hover:text-slate-300 transition flex items-center gap-1.5 text-[11px]" title="ورود به پیشخوان مدیریت پروژه‌ها">
-            <span>🔐</span>
-            <span>ورود مدیر</span>
-          </router-link>
-          <a href="#home" class="hover:text-white transition hover:scale-105">بازگشت به بالا ↑</a>
+        <div class="font-semibold text-slate-500">
           <span>طراحی شده با Vue 3 + Tailwind CSS + Laravel</span>
         </div>
       </div>

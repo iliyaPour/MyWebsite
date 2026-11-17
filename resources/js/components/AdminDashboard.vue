@@ -1089,11 +1089,16 @@ const saveProject = async () => {
     .map(f => f.trim())
     .filter(Boolean);
 
+  let cleanImage = form.value.image ? form.value.image.trim() : null;
+  if (cleanImage && !cleanImage.startsWith('http') && !cleanImage.startsWith('/')) {
+    cleanImage = '/' + cleanImage;
+  }
+
   const payload = {
     title: form.value.title,
     category: form.value.category,
     category_label: form.value.categoryLabel,
-    image: form.value.image || null,
+    image: cleanImage,
     short_desc: form.value.shortDesc,
     full_desc: form.value.fullDesc,
     hosted_url: form.value.hostedUrl || null,
@@ -1104,17 +1109,20 @@ const saveProject = async () => {
 
   try {
     const url = isEditing.value ? `/api/admin/projects/${form.value.id}` : '/api/admin/projects';
-    const method = isEditing.value ? 'PUT' : 'POST';
 
     const res = await fetch(url, {
-      method,
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'X-CSRF-TOKEN': getCsrfToken(),
+        'X-HTTP-Method-Override': isEditing.value ? 'PUT' : 'POST',
       },
       credentials: 'same-origin',
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        ...payload,
+        _method: isEditing.value ? 'PUT' : 'POST',
+      }),
     });
 
     const data = await res.json();

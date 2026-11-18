@@ -364,26 +364,28 @@
           leave-from-class="opacity-100 scale-100"
           leave-to-class="opacity-0 scale-95"
         >
-          <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-slate-950/80 backdrop-blur-md">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl my-8 relative flex flex-col max-h-[90vh]">
-              <!-- Modal Header -->
-              <div class="px-6 py-5 border-b border-slate-800/80 flex items-center justify-between bg-slate-950/50">
-                <div class="flex items-center gap-2">
-                  <span class="text-xl">{{ isEditing ? '✏️' : '✨' }}</span>
-                  <h3 class="text-base font-bold text-white">
-                    {{ isEditing ? 'ویرایش پروژه' : 'افزودن پروژه جدید' }}
-                  </h3>
+          <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-hidden bg-slate-950/85 backdrop-blur-md" @click.self="closeModal">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl relative flex flex-col max-h-[92vh] sm:max-h-[88vh]">
+              <form @submit.prevent="saveProject" class="flex flex-col h-full overflow-hidden">
+                <!-- Modal Header (Sticky) -->
+                <div class="shrink-0 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-950/80 z-10">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xl">{{ isEditing ? '✏️' : '✨' }}</span>
+                    <h3 class="text-sm sm:text-base font-bold text-white">
+                      {{ isEditing ? 'ویرایش پروژه' : 'افزودن پروژه جدید' }}
+                    </h3>
+                  </div>
+                  <button
+                    type="button"
+                    @click="closeModal"
+                    class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer text-sm font-bold"
+                  >
+                    ✕
+                  </button>
                 </div>
-                <button
-                  @click="closeModal"
-                  class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
-                >
-                  ✕
-                </button>
-              </div>
 
-              <!-- Modal Form Body -->
-              <form @submit.prevent="saveProject" class="p-6 overflow-y-auto space-y-5 text-xs">
+                <!-- Modal Form Body (Scrollable) -->
+                <div class="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6 space-y-4 sm:space-y-5 text-xs">
                 <!-- Title -->
                 <div>
                   <label class="block font-semibold text-slate-300 mb-1.5">عنوان پروژه <span class="text-orange-500">*</span></label>
@@ -569,31 +571,34 @@
                 <div v-if="modalError" class="p-3 bg-red-950/60 border border-red-800/60 rounded-xl text-red-300 text-xs">
                   {{ modalError }}
                 </div>
+              </div>
 
-                <!-- Form Action Buttons -->
-                <div class="pt-4 border-t border-slate-800/80 flex items-center justify-end gap-3">
-                  <button
-                    type="button"
-                    @click="closeModal"
-                    class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer"
-                  >
-                    انصراف
-                  </button>
-                  <button
-                    type="submit"
-                    :disabled="isSavingProject"
-                    class="px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-300 hover:to-amber-400 transition-all shadow-md shadow-orange-500/20 disabled:opacity-50 flex items-center gap-2 cursor-pointer"
-                  >
-                    <svg v-if="isSavingProject" class="animate-spin h-4 w-4 text-slate-950" fill="none" viewBox="0 0 24 24">
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                    </svg>
-                    <span>{{ isSavingProject ? 'در حال ذخیره...' : (isEditing ? 'بروزرسانی پروژه' : 'افزودن به سایت') }}</span>
-                  </button>
-                </div>
-              </form>
-            </div>
+              <!-- Form Action Buttons (Sticky Footer) -->
+              <div class="shrink-0 px-4 sm:px-6 py-3 sm:py-3.5 border-t border-slate-800/80 bg-slate-950/95 flex items-center justify-end gap-3 z-10">
+                <button
+                  type="button"
+                  @click="closeModal"
+                  class="px-4 sm:px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer text-xs font-semibold"
+                >
+                  انصراف
+                </button>
+                <button
+                  type="submit"
+                  :disabled="isSavingProject || form.isUploadingImage"
+                  class="px-5 sm:px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-300 hover:to-amber-400 transition-all shadow-md shadow-orange-500/20 disabled:opacity-50 flex items-center gap-2 cursor-pointer disabled:cursor-not-allowed text-xs"
+                >
+                  <svg v-if="isSavingProject || form.isUploadingImage" class="animate-spin h-4 w-4 text-slate-950" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                  </svg>
+                  <span>
+                    {{ form.isUploadingImage ? 'در حال آپلود عکس...' : (isSavingProject ? 'در حال ذخیره...' : (isEditing ? 'بروزرسانی پروژه' : 'افزودن به سایت')) }}
+                  </span>
+                </button>
+              </div>
+            </form>
           </div>
+        </div>
         </transition>
 
         <!-- ============================================== -->
@@ -607,8 +612,8 @@
           leave-from-class="opacity-100 scale-100"
           leave-to-class="opacity-0 scale-95"
         >
-          <div v-if="deleteModal.show" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-md shadow-2xl relative">
+          <div v-if="deleteModal.show" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/85 backdrop-blur-md overflow-hidden" @click.self="deleteModal.show = false">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-6 w-full max-w-md shadow-2xl relative max-h-[92vh] sm:max-h-[88vh] overflow-y-auto overscroll-contain">
               <div class="text-center mb-5">
                 <div class="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-2xl mx-auto mb-3">
                   🗑️
@@ -655,8 +660,8 @@
           leave-from-class="opacity-100 scale-100"
           leave-to-class="opacity-0 scale-95"
         >
-          <div v-if="passwordModal.show" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 w-full max-w-md shadow-2xl relative">
+          <div v-if="passwordModal.show" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/85 backdrop-blur-md overflow-hidden" @click.self="passwordModal.show = false">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-6 w-full max-w-md shadow-2xl relative max-h-[92vh] sm:max-h-[88vh] overflow-y-auto overscroll-contain">
               <div class="flex items-center justify-between mb-5">
                 <div class="flex items-center gap-2">
                   <span class="text-xl">🔑</span>
@@ -1075,6 +1080,11 @@ const closeModal = () => {
 
 // Save Project (Create or Update)
 const saveProject = async () => {
+  if (form.value.isUploadingImage) {
+    modalError.value = 'لطفاً تا اتمام بارگذاری تصویر منتظر بمانید...';
+    return;
+  }
+
   modalError.value = '';
   isSavingProject.value = true;
 

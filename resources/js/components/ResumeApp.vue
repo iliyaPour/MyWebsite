@@ -54,11 +54,10 @@
           <!-- Admin Login Button (Navbar) -->
           <router-link
             to="/admin"
-            class="px-3.5 py-2 rounded-2xl bg-slate-900/90 hover:bg-orange-500/20 border border-slate-800 hover:border-orange-500/60 text-slate-300 hover:text-orange-400 flex items-center gap-1.5 transition-all duration-300 shadow-sm text-xs font-bold"
+            class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 hover:from-orange-500/20 hover:to-amber-500/20 border border-orange-500/40 hover:border-orange-500 text-orange-400 hover:text-orange-300 flex items-center gap-1.5 transition-all duration-300 shadow-sm text-xs font-bold shrink-0 cursor-pointer"
             title="ورود به پنل مدیریت"
           >
             <span>ورود مدیر</span>
-            <span class="text-xs">🔐</span>
           </router-link>
         </div>
 
@@ -643,12 +642,11 @@
                 </span>
                 <button
                   type="button"
-                  @click.prevent.stop="copyToClipboard('@TheOgDAWG', 'آیدی تلگرام با موفقیت کپی شد! 📋')"
-                  class="px-2.5 py-0.5 rounded-lg bg-slate-800 hover:bg-orange-500 hover:text-white text-slate-300 text-[11px] font-bold transition flex items-center gap-1 cursor-pointer"
+                  @click.prevent.stop="copyToClipboard('@TheOgDAWG', 'آیدی تلگرام با موفقیت کپی شد!')"
+                  class="px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-xl bg-slate-800/90 hover:bg-gradient-to-r hover:from-orange-400 hover:to-amber-500 hover:text-slate-950 text-slate-300 border border-slate-700/70 hover:border-transparent text-xs font-black transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-orange-500/25 active:scale-95 cursor-pointer"
                   title="کپی آیدی تلگرام"
                 >
-                  <span>📋</span>
-                  <span>کپی</span>
+                  کپی
                 </button>
               </div>
               <strong class="text-xl sm:text-2xl text-white group-hover:text-orange-400 font-black block mb-1 truncate transition-colors">
@@ -680,12 +678,11 @@
                 </span>
                 <button
                   type="button"
-                  @click.prevent.stop="copyToClipboard('iliya.pourzanjani6@gmail.com', 'آدرس ایمیل با موفقیت کپی شد! 📋')"
-                  class="px-2.5 py-0.5 rounded-lg bg-slate-800 hover:bg-orange-500 hover:text-white text-slate-300 text-[11px] font-bold transition flex items-center gap-1 cursor-pointer"
+                  @click.prevent.stop="copyToClipboard('iliya.pourzanjani6@gmail.com', 'آدرس ایمیل با موفقیت کپی شد!')"
+                  class="px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-xl bg-slate-800/90 hover:bg-gradient-to-r hover:from-orange-400 hover:to-amber-500 hover:text-slate-950 text-slate-300 border border-slate-700/70 hover:border-transparent text-xs font-black transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-orange-500/25 active:scale-95 cursor-pointer"
                   title="کپی آدرس ایمیل"
                 >
-                  <span>📋</span>
-                  <span>کپی</span>
+                  کپی
                 </button>
               </div>
               <strong class="text-base sm:text-lg text-white group-hover:text-orange-400 font-black font-mono block mb-1 truncate transition-colors">
@@ -763,10 +760,10 @@
       <button
         v-if="isScrolled"
         @click="scrollToTop"
-        class="fixed bottom-12 right-6 sm:right-10 z-40 w-13 h-13 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-orange-500 hover:border-orange-400 text-orange-400 hover:text-white shadow-2xl shadow-orange-500/40 hover:shadow-orange-500/60 backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:scale-115 active:scale-95 cursor-pointer no-print ring-4 ring-orange-500/20"
+        class="fixed bottom-20 right-6 sm:bottom-24 sm:right-8 z-50 w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-orange-500 hover:border-orange-400 text-orange-400 hover:text-white shadow-2xl shadow-orange-500/40 hover:shadow-orange-500/60 backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:scale-115 active:scale-95 cursor-pointer no-print ring-4 ring-orange-500/20 group"
         title="بازگشت به ابتدای صفحه"
       >
-        <svg class="w-6 h-6 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 stroke-[3] group-hover:-translate-y-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
       </button>
@@ -796,147 +793,157 @@
     >
       <div 
         v-if="activeModalProject" 
-        class="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto"
+        class="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 overflow-hidden"
         @click.self="activeModalProject = null"
       >
-        <div class="bg-[#0B0F17] w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-800 overflow-hidden my-8 transform transition-all duration-300 scale-100">
+        <div class="bg-[#0B0F17] w-full max-w-2xl max-h-[92vh] sm:max-h-[88vh] rounded-3xl shadow-2xl border border-slate-800 overflow-hidden flex flex-col transform transition-all duration-300 scale-100">
           
-          <!-- FEATURE 3: Browser Chrome Bar on Modal -->
-          <div class="px-5 py-3 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+          <!-- FEATURE 3: Browser Chrome Bar on Modal (Sticky Header) -->
+          <div class="shrink-0 px-4 sm:px-5 py-3 bg-slate-950 border-b border-slate-800 flex items-center justify-between z-10">
             <div class="flex items-center gap-2">
               <span class="w-3 h-3 rounded-full bg-rose-500"></span>
               <span class="w-3 h-3 rounded-full bg-amber-500"></span>
               <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+              <span class="text-[11px] text-slate-400 font-bold mr-2 hidden sm:inline truncate max-w-[260px]">
+                {{ activeModalProject.title }}
+              </span>
             </div>
 
             <button 
               @click="activeModalProject = null" 
-              class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm transition"
+              class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-sm font-bold transition cursor-pointer"
+              title="بستن پنجره"
             >
               ✕
             </button>
           </div>
 
-          <!-- Modal Banner -->
-          <div :class="['p-6 sm:p-8 text-white relative overflow-hidden', activeModalProject.gradient || 'bg-slate-900']">
-            <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <span class="text-xs uppercase font-extrabold tracking-wider px-3.5 py-1 rounded-full bg-black/45 backdrop-blur-md text-white border border-white/10 shadow-sm">
-                  {{ activeModalProject.categoryLabel }}
-                </span>
-                <h3 class="text-2xl sm:text-3xl font-black mt-2.5">{{ activeModalProject.title }}</h3>
-              </div>
-              <div v-if="activeModalProject.hostedUrl" class="shrink-0">
-                <a 
-                  :href="activeModalProject.hostedUrl" 
-                  target="_blank" 
-                  class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-orange-500/25 transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
-                >
-                  <span>مشاهده سایت زنده</span>
-                  <span>↗</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project Website Screenshot Preview (Instead of Emoji) -->
-          <div v-if="activeModalProject.image" class="px-6 sm:px-8 pt-6">
-            <div class="rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl relative group/preview">
-              <div class="px-4 py-2 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
-                <span class="text-[11px] font-bold text-slate-400 flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                  <span>تصویر و اسکرین‌شات وب‌سایت</span>
-                </span>
-                <a
-                  :href="activeModalProject.image"
-                  target="_blank"
-                  class="text-[11px] text-orange-400 hover:text-orange-300 transition flex items-center gap-1 font-semibold"
-                >
-                  <span>مشاهده تصویر کامل</span>
-                  <span>↗</span>
-                </a>
-              </div>
-              <img
-                :src="activeModalProject.image"
-                :alt="activeModalProject.title"
-                class="w-full max-h-[380px] object-cover object-top hover:scale-[1.01] transition-transform duration-300"
-              />
-            </div>
-          </div>
-
-          <!-- Modal Body Content -->
-          <div class="p-6 sm:p-8 space-y-6">
+          <!-- Scrollable Body Content -->
+          <div class="flex-1 overflow-y-auto overscroll-contain">
             
-            <!-- Description -->
-            <div>
-              <h4 class="text-xs font-black uppercase tracking-wider text-slate-500 mb-2">
-                توضیحات و اهداف پروژه
-              </h4>
-              <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                {{ activeModalProject.fullDesc }}
-              </p>
-            </div>
-
-            <!-- Key Features -->
-            <div v-if="activeModalProject.features && activeModalProject.features.length">
-              <h4 class="text-xs font-black uppercase tracking-wider text-slate-500 mb-2.5">
-                امکانات کلیدی پیاده‌سازی شده
-              </h4>
-              <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
-                <li v-for="(feat, fIdx) in activeModalProject.features" :key="fIdx" class="flex items-start gap-2.5">
-                  <span class="font-bold text-base text-orange-400">✓</span>
-                  <span>{{ feat }}</span>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Tags -->
-            <div>
-              <h4 class="text-xs font-black uppercase tracking-wider text-slate-500 mb-2.5">
-                تکنولوژی‌ها و ابزارها
-              </h4>
-              <div class="flex flex-wrap gap-2">
-                <span 
-                  v-for="(tech, tIdx) in activeModalProject.tags" 
-                  :key="tIdx" 
-                  class="px-3.5 py-1.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-black"
-                >
-                  {{ tech }}
-                </span>
+            <!-- Modal Banner -->
+            <div :class="['p-5 sm:p-7 text-white relative overflow-hidden', activeModalProject.gradient || 'bg-slate-900']">
+              <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                <div>
+                  <span class="text-[10px] sm:text-xs uppercase font-extrabold tracking-wider px-3 py-1 rounded-full bg-black/45 backdrop-blur-md text-white border border-white/10 shadow-sm inline-block">
+                    {{ activeModalProject.categoryLabel }}
+                  </span>
+                  <h3 class="text-xl sm:text-2xl lg:text-3xl font-black mt-2">{{ activeModalProject.title }}</h3>
+                </div>
+                <div v-if="activeModalProject.hostedUrl" class="shrink-0">
+                  <a 
+                    :href="activeModalProject.hostedUrl" 
+                    target="_blank" 
+                    class="inline-flex items-center gap-1.5 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-300 hover:to-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-orange-500/25 transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
+                  >
+                    <span>مشاهده سایت زنده</span>
+                    <span>↗</span>
+                  </a>
+                </div>
               </div>
             </div>
 
-            <!-- Action Buttons with Host Link Direct Callout -->
-            <div class="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <!-- Project Website Screenshot Preview -->
+            <div v-if="activeModalProject.image" class="px-4 sm:px-7 pt-4 sm:pt-6">
+              <div class="rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl relative group/preview">
+                <div class="px-3.5 py-2 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+                  <span class="text-[11px] font-bold text-slate-400 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>تصویر و اسکرین‌شات وب‌سایت</span>
+                  </span>
+                  <a
+                    :href="activeModalProject.image"
+                    target="_blank"
+                    class="text-[11px] text-orange-400 hover:text-orange-300 transition flex items-center gap-1 font-semibold"
+                  >
+                    <span>مشاهده تصویر کامل</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+                <img
+                  :src="activeModalProject.image"
+                  :alt="activeModalProject.title"
+                  class="w-full max-h-[220px] sm:max-h-[340px] object-cover object-top hover:scale-[1.01] transition-transform duration-300"
+                />
+              </div>
+            </div>
+
+            <!-- Modal Text Content -->
+            <div class="p-5 sm:p-7 space-y-5 sm:space-y-6">
+              
+              <!-- Description -->
+              <div>
+                <h4 class="text-xs font-black uppercase tracking-wider text-slate-500 mb-2">
+                  توضیحات و اهداف پروژه
+                </h4>
+                <p class="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed">
+                  {{ activeModalProject.fullDesc }}
+                </p>
+              </div>
+
+              <!-- Key Features -->
+              <div v-if="activeModalProject.features && activeModalProject.features.length">
+                <h4 class="text-xs font-black uppercase tracking-wider text-slate-500 mb-2.5">
+                  امکانات کلیدی پیاده‌سازی شده
+                </h4>
+                <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                  <li v-for="(feat, fIdx) in activeModalProject.features" :key="fIdx" class="flex items-start gap-2.5">
+                    <span class="font-bold text-base text-orange-400">✓</span>
+                    <span>{{ feat }}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Tags -->
+              <div>
+                <h4 class="text-xs font-black uppercase tracking-wider text-slate-500 mb-2.5">
+                  تکنولوژی‌ها و ابزارها
+                </h4>
+                <div class="flex flex-wrap gap-1.5 sm:gap-2">
+                  <span 
+                    v-for="(tech, tIdx) in activeModalProject.tags" 
+                    :key="tIdx" 
+                    class="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl bg-slate-800 text-slate-200 text-[11px] sm:text-xs font-black"
+                  >
+                    {{ tech }}
+                  </span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Sticky Action Footer -->
+          <div class="shrink-0 px-4 sm:px-7 py-3 sm:py-4 border-t border-slate-800 bg-slate-950/95 backdrop-blur-md flex items-center justify-between gap-2.5 sm:gap-3 z-10">
+            <a 
+              v-if="activeModalProject.hostedUrl" 
+              :href="activeModalProject.hostedUrl" 
+              target="_blank" 
+              class="flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 hover:from-amber-400 hover:to-orange-400 text-white font-black text-xs sm:text-sm shadow-xl shadow-orange-500/25 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-1.5"
+            >
+              <span>مشاهده آنلاین در هاست</span>
+              <span>🚀</span>
+            </a>
+
+            <div class="flex items-center gap-2">
               <a 
-                :href="activeModalProject.hostedUrl" 
+                v-if="activeModalProject.githubUrl" 
+                :href="activeModalProject.githubUrl" 
                 target="_blank" 
-                class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 hover:from-amber-400 hover:to-orange-400 text-white font-black text-xs sm:text-sm shadow-xl shadow-orange-500/25 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2"
+                class="px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-200 font-bold text-xs transition flex items-center justify-center gap-1.5 hover:scale-105 active:scale-95"
               >
-                <span>مشاهده آنلاین در هاست</span>
-                <span>🚀</span>
+                <span>🐙</span>
+                <span class="hidden sm:inline">گیت‌هاب</span>
               </a>
 
-              <div class="flex items-center gap-2.5 w-full sm:w-auto">
-                <a 
-                  v-if="activeModalProject.githubUrl" 
-                  :href="activeModalProject.githubUrl" 
-                  target="_blank" 
-                  class="flex-1 sm:flex-initial px-5 py-4 rounded-2xl border border-slate-700 hover:bg-slate-800 text-slate-200 font-bold text-xs transition flex items-center justify-center gap-1.5 hover:scale-105 active:scale-95"
-                >
-                  <span>🐙</span>
-                  <span>گیت‌هاب</span>
-                </a>
-
-                <button 
-                  @click="activeModalProject = null" 
-                  class="px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition hover:scale-105 active:scale-95"
-                >
-                  بستن
-                </button>
-              </div>
+              <button 
+                @click="activeModalProject = null" 
+                class="px-4 py-2.5 sm:py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs transition hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                بستن
+              </button>
             </div>
-
           </div>
 
         </div>
